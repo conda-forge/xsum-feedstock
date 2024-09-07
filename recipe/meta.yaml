@@ -1,5 +1,5 @@
 {% set name = "xsum" %}
-{% set version = "1.1.1" %}
+{% set version = "1.1.8" %}
 
 package:
   name: {{ name|lower }}
@@ -7,10 +7,10 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 21ff547dbb64e8ddefd376f2889349c7a94fce69e7fc417fc661068b298473b1
+  sha256: b064a7319020f96e5d97ff3687d0ee78fe1012468cca132014cc0b929ca78ea0
 
 build:
-  number: 6
+  number: 0
   script: "{{ PYTHON }} -m pip install . -vv"
 
 requirements:
@@ -18,7 +18,7 @@ requirements:
     - {{ compiler('cxx') }}
     - {{ stdlib("c") }}
   host:
-    - python 
+    - python
     - pip
     - pybind11
   run:
@@ -47,7 +47,7 @@ about:
     described in the paper 
     "Fast Exact Summation Using Small and Large Superaccumulators," by Radford 
     M. Neal.
-  dev_url: https://github.com/yafshar/xsum  
+  dev_url: https://github.com/yafshar/xsum
 
 extra:
   recipe-maintainers:
