@@ -1,5 +1,5 @@
 {% set name = "xsum" %}
-{% set version = "1.1.1" %}
+{% set version = "2.0.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,28 +7,35 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 21ff547dbb64e8ddefd376f2889349c7a94fce69e7fc417fc661068b298473b1
+  sha256: e4bdab1d4b5058ad04c2ae30cc26b3610ef04959d131a60ee8e4e48f896e5129 
 
 build:
-  number: 7
-  script: "{{ PYTHON }} -m pip install . -vv"
+  number: 0
+  script: "{{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation" 
 
 requirements:
   build:
     - {{ compiler('cxx') }}
     - {{ stdlib("c") }}
   host:
-    - python 
+    - python
     - pip
-    - pybind11
+    - setuptools >=64
+    - wheel
+    - pybind11 >=2.5.0
+    - versioneer >=0.29
   run:
     - python
-    - pybind11
     - numpy
 
 test:
   imports:
     - xsum
+  commands:
+    - python -c "from xsum import xsum_small; s = xsum_small(); s.add(1.0); assert s.round() == 1.0"
+    - pip check
+  requires:
+    - pip
 
 about:
   home: https://github.com/yafshar/xsum
